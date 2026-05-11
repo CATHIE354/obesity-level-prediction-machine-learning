@@ -1,5 +1,13 @@
 from config import DATA_PATH, TARGET_COLUMN, TEST_SIZE, RANDOM_STATE
-from preprocessing.preprocessing import load_data, preprocess_data
+
+from preprocessing.preprocessing import (
+    load_data,
+    preprocess_data,
+    inspect_dataset,
+    clean_data,
+    add_bmi_feature
+)
+
 from models.model_training import train_random_forest
 from evaluation.evaluation import evaluate_model
 from utils.visualization import (
@@ -15,6 +23,15 @@ def main():
     """
     print("Loading dataset...")
     dataframe = load_data(DATA_PATH)
+    
+    print("Inspecting dataset...")
+    inspect_dataset(dataframe, TARGET_COLUMN)
+
+    print("Cleaning dataset...")
+    dataframe = clean_data(dataframe)
+
+    print("Adding BMI feature...")
+    dataframe = add_bmi_feature(dataframe)
 
     print("Creating target distribution graph...")
     plot_target_distribution(dataframe)

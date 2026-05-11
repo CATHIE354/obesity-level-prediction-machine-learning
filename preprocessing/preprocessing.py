@@ -54,3 +54,38 @@ def preprocess_data(dataframe, target_column, test_size=0.2, random_state=42):
     )
 
     return x_train, x_test, y_train, y_test
+
+def inspect_dataset(dataframe, target_column):
+    """
+    Display basic dataset information such as shape, missing values,
+    duplicate rows, and target class distribution.
+    """
+    print("\nDataset Shape:")
+    print(dataframe.shape)
+
+    print("\nMissing Values:")
+    print(dataframe.isnull().sum())
+
+    print("\nDuplicate Rows:")
+    print(dataframe.duplicated().sum())
+
+    print("\nTarget Distribution:")
+    print(dataframe[target_column].value_counts())
+
+
+def clean_data(dataframe):
+    """
+    Clean the dataset by removing duplicate rows.
+    """
+    cleaned_dataframe = dataframe.drop_duplicates()
+    return cleaned_dataframe
+
+
+def add_bmi_feature(dataframe):
+    """
+    Add Body Mass Index (BMI) as a new feature.
+    BMI is calculated using weight divided by height squared.
+    """
+    dataframe = dataframe.copy()
+    dataframe["BMI"] = dataframe["Weight"] / (dataframe["Height"] ** 2)
+    return dataframe
